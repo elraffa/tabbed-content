@@ -3,19 +3,21 @@ import {
   InspectorControls,
   MediaUpload,
   useBlockProps,
-  RichText,
+  RichText
 } from '@wordpress/block-editor';
 import {
   PanelBody,
   TextControl,
   Button,
-  PanelRow
+  PanelRow,
+  SelectControl,
+  FontSizePicker
 } from '@wordpress/components';
-import { useState } from '@wordpress/element';
+import { useState, createElement } from '@wordpress/element';
 import './editor.scss';
 
 const Edit = ({ attributes, setAttributes }) => {
-  const { blockTitle, tabs } = attributes;
+  const { blockTitle, headingTag = "h2", tabs = [], headingFontSize = 'default' } = attributes;
   const [currentTab, setCurrentTab] = useState(0);
 
   // Update a field inside a tab
@@ -37,6 +39,8 @@ const Edit = ({ attributes, setAttributes }) => {
     if (currentTab === index) setCurrentTab(0);
   };
 
+  const TagName = headingTag || 'h2';
+
   return (
     <>
       {/* Inspector Sidebar */}
@@ -48,6 +52,34 @@ const Edit = ({ attributes, setAttributes }) => {
             onChange={(val) => setAttributes({ blockTitle: val })}
           />
         </PanelBody>
+		<PanelBody title="Heading Settings" initialOpen={false}>
+		<SelectControl
+			label="Heading Tag"
+			value={headingTag}
+			options={[
+			{ label: 'H1', value: 'h1' },
+			{ label: 'H2', value: 'h2' },
+			{ label: 'H3', value: 'h3' },
+			{ label: 'H4', value: 'h4' },
+			{ label: 'H5', value: 'h5' },
+			{ label: 'H6', value: 'h6' }
+			]}
+			onChange={(val) => setAttributes({ headingTag: val })}
+		/>
+
+		<FontSizePicker
+			label="Font Size"
+			value={headingFontSize}
+			onChange={(val) => setAttributes({ headingFontSize: val })}
+			fontSizes={[
+				{ name: 'Small', slug: 'small', size: 14 },
+				{ name: 'Medium', slug: 'medium', size: 18 },
+				{ name: 'Large', slug: 'large', size: 24 },
+				{ name: 'Extra Large', slug: 'x-large', size: 32 }
+			]}
+			withSlider
+		/>
+		</PanelBody>
 
         <PanelBody title="Tabs" initialOpen={true}>
           <PanelRow>
@@ -103,11 +135,19 @@ const Edit = ({ attributes, setAttributes }) => {
 
       {/* Visual Preview in Canvas */}
       <div {...useBlockProps()} className="proprietary-tools-block">
-        <h2 className="block-title">{blockTitle}</h2>
+		
+		{createElement(
+			TagName,
+			{
+				className: `block-title`,
+				style: { fontSize: headingFontSize ? `${headingFontSize}px` : undefined }
+			},
+			blockTitle
+		)}
 
         {/* Tab headers (hover to preview) */}
         <div className="tab-headings">
-          {tabs.map((tab, index) => (
+          {tabs && tabs.length > 0 && tabs.map((tab, index) => (
             <button
               key={index}
               className={`tab-button ${index === currentTab ? 'active' : ''}`}
@@ -119,7 +159,7 @@ const Edit = ({ attributes, setAttributes }) => {
         </div>
 
         {/* Tab Content Preview */}
-        {tabs[currentTab] && (
+        {tabs && tabs[currentTab] && (
           <div className="tab-panel-preview">
             <p>{tabs[currentTab].description}</p>
             {tabs[currentTab].imageUrl && (

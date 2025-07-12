@@ -1,13 +1,21 @@
 // src/save.js
 import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { createElement } from '@wordpress/element';
 
 const Save = ({ attributes }) => {
-  const { blockTitle, tabs } = attributes;
+  const { blockTitle, headingTag = 'h2', headingFontSize, tabs } = attributes;
 
   return (
     <div {...useBlockProps.save()} className="proprietary-tools-block">
       {/* Block Title */}
-      <RichText.Content tagName="h2" value={blockTitle} className="block-title" />
+      {createElement(
+        headingTag,
+        {
+          className: 'block-title',
+          style: { fontSize: headingFontSize ? `${headingFontSize}px` : undefined }
+        },
+        blockTitle
+      )}
 
       {/* Tab Headers */}
       <div className="tab-headings">

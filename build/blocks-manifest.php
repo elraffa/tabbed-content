@@ -26,6 +26,14 @@ return array(
 				'type' => 'string',
 				'default' => 'Tabbed Content'
 			),
+			'headingTag' => array(
+				'type' => 'string',
+				'default' => 'h2'
+			),
+			'headingFontSize' => array(
+				'type' => 'string',
+				'default' => 'default'
+			),
 			'tabs' => array(
 				'type' => 'array',
 				'default' => array(

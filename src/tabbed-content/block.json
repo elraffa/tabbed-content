@@ -21,6 +21,14 @@
 			"type": "string",
 			"default": "Tabbed Content"
 		},
+		"headingTag": {
+			"type": "string",
+			"default": "h2"
+		},
+		"headingFontSize": {
+			"type": "string",
+			"default": "default"
+		},
 		"tabs": {
 			"type": "array",
 			"default": [

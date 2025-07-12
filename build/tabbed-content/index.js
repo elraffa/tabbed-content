@@ -8,7 +8,7 @@
   \***************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"real-blocks/tabbed-content","version":"0.1.0","title":"Tabbed Content","category":"layout","icon":"grid-view","description":"A custom block for displaying tabbed content.","example":{},"supports":{"html":false},"textdomain":"tabbed-content","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"blockTitle":{"type":"string","default":"Tabbed Content"},"tabs":{"type":"array","default":[{"title":"Leo","description":"This is the content for Leo tab.","imageUrl":"","imageAlt":"Leo image"}]},"activeTab":{"type":"number","default":0}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"real-blocks/tabbed-content","version":"0.1.0","title":"Tabbed Content","category":"layout","icon":"grid-view","description":"A custom block for displaying tabbed content.","example":{},"supports":{"html":false},"textdomain":"tabbed-content","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"blockTitle":{"type":"string","default":"Tabbed Content"},"headingTag":{"type":"string","default":"h2"},"headingFontSize":{"type":"string","default":"default"},"tabs":{"type":"array","default":[{"title":"Leo","description":"This is the content for Leo tab.","imageUrl":"","imageAlt":"Leo image"}]},"activeTab":{"type":"number","default":0}}}');
 
 /***/ }),
 
@@ -43,7 +43,9 @@ const Edit = ({
 }) => {
   const {
     blockTitle,
-    tabs
+    headingTag = "h2",
+    tabs = [],
+    headingFontSize = 'default'
   } = attributes;
   const [currentTab, setCurrentTab] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(0);
 
@@ -72,6 +74,7 @@ const Edit = ({
     });
     if (currentTab === index) setCurrentTab(0);
   };
+  const TagName = headingTag || 'h2';
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
@@ -83,6 +86,59 @@ const Edit = ({
             blockTitle: val
           })
         })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+        title: "Heading Settings",
+        initialOpen: false,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
+          label: "Heading Tag",
+          value: headingTag,
+          options: [{
+            label: 'H1',
+            value: 'h1'
+          }, {
+            label: 'H2',
+            value: 'h2'
+          }, {
+            label: 'H3',
+            value: 'h3'
+          }, {
+            label: 'H4',
+            value: 'h4'
+          }, {
+            label: 'H5',
+            value: 'h5'
+          }, {
+            label: 'H6',
+            value: 'h6'
+          }],
+          onChange: val => setAttributes({
+            headingTag: val
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FontSizePicker, {
+          label: "Font Size",
+          value: headingFontSize,
+          onChange: val => setAttributes({
+            headingFontSize: val
+          }),
+          fontSizes: [{
+            name: 'Small',
+            slug: 'small',
+            size: 14
+          }, {
+            name: 'Medium',
+            slug: 'medium',
+            size: 18
+          }, {
+            name: 'Large',
+            slug: 'large',
+            size: 24
+          }, {
+            name: 'Extra Large',
+            slug: 'x-large',
+            size: 32
+          }],
+          withSlider: true
+        })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
         title: "Tabs",
         initialOpen: true,
@@ -132,17 +188,19 @@ const Edit = ({
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
       ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps)(),
       className: "proprietary-tools-block",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h2", {
-        className: "block-title",
-        children: blockTitle
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      children: [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.createElement)(TagName, {
+        className: `block-title`,
+        style: {
+          fontSize: headingFontSize ? `${headingFontSize}px` : undefined
+        }
+      }, blockTitle), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         className: "tab-headings",
-        children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+        children: tabs && tabs.length > 0 && tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
           className: `tab-button ${index === currentTab ? 'active' : ''}`,
           onMouseEnter: () => setCurrentTab(index),
           children: tab.title
         }, index))
-      }), tabs[currentTab] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      }), tabs && tabs[currentTab] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         className: "tab-panel-preview",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
           children: tabs[currentTab].description
@@ -240,9 +298,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
 // src/save.js
+
 
 
 const Save = ({
@@ -250,31 +311,34 @@ const Save = ({
 }) => {
   const {
     blockTitle,
+    headingTag = 'h2',
+    headingFontSize,
     tabs
   } = attributes;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save(),
     className: "proprietary-tools-block",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
-      tagName: "h2",
-      value: blockTitle,
-      className: "block-title"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: [(0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(headingTag, {
+      className: 'block-title',
+      style: {
+        fontSize: headingFontSize ? `${headingFontSize}px` : undefined
+      }
+    }, blockTitle), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "tab-headings",
-      children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+      children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
         className: "tab-button",
         "data-tab": index,
         children: tab.title
       }, index))
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "tab-content-container",
-      children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: `tab-panel ${index === 0 ? 'active' : ''}` // default to show first tab
         ,
         "data-tab-index": index,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("p", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
           children: tab.description
-        }), tab.imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
+        }), tab.imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
           src: tab.imageUrl,
           alt: tab.imageAlt || ''
         })]
