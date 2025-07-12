@@ -1,9 +1,25 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
+.tab-headings {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
 
-.wp-block-real-blocks-tabbed-content {
-	border: 1px dotted #f00;
+  .tab-button {
+    padding: 8px 12px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+
+    &.active {
+      background: #007cba;
+      color: white;
+    }
+  }
+}
+
+.tab-content {
+  margin-top: 1.5rem;
+
+  p {
+    margin-top: 0.5rem;
+  }
 }

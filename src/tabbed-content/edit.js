@@ -1,41 +1,139 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+// src/edit.js
+import {
+  InspectorControls,
+  MediaUpload,
+  useBlockProps,
+  RichText,
+} from '@wordpress/block-editor';
+import {
+  PanelBody,
+  TextControl,
+  Button,
+  PanelRow
+} from '@wordpress/components';
+import { useState } from '@wordpress/element';
 import './editor.scss';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
-	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Tabbed Content – hello from the editor!',
-				'tabbed-content'
-			) }
-		</p>
-	);
-}
+const Edit = ({ attributes, setAttributes }) => {
+  const { blockTitle, tabs } = attributes;
+  const [currentTab, setCurrentTab] = useState(0);
+
+  // Update a field inside a tab
+  const updateTab = (index, field, value) => {
+    const updated = [...tabs];
+    updated[index][field] = value;
+    setAttributes({ tabs: updated });
+  };
+
+  const addTab = () => {
+    setAttributes({
+      tabs: [...tabs, { title: 'New Tab', description: '', imageUrl: '', imageAlt: '' }]
+    });
+  };
+
+  const removeTab = (index) => {
+    const updated = tabs.filter((_, i) => i !== index);
+    setAttributes({ tabs: updated });
+    if (currentTab === index) setCurrentTab(0);
+  };
+
+  return (
+    <>
+      {/* Inspector Sidebar */}
+      <InspectorControls>
+        <PanelBody title="Block Title">
+          <TextControl
+            label="Main Heading"
+            value={blockTitle}
+            onChange={(val) => setAttributes({ blockTitle: val })}
+          />
+        </PanelBody>
+
+        <PanelBody title="Tabs" initialOpen={true}>
+          <PanelRow>
+            <TextControl
+              label="Tab Title"
+              value={tabs[currentTab]?.title}
+              onChange={(val) => updateTab(currentTab, 'title', val)}
+            />
+          </PanelRow>
+
+          <PanelRow>
+            <TextControl
+              label="Tab Description"
+              value={tabs[currentTab]?.description}
+              onChange={(val) => updateTab(currentTab, 'description', val)}
+            />
+          </PanelRow>
+
+          <PanelRow>
+            <MediaUpload
+              onSelect={(media) => {
+                updateTab(currentTab, 'imageUrl', media.url);
+                updateTab(currentTab, 'imageAlt', media.alt);
+              }}
+              allowedTypes={['image']}
+              render={({ open }) => (
+                <Button onClick={open} variant="secondary">
+                  {tabs[currentTab]?.imageUrl ? 'Change Image' : 'Upload Image'}
+                </Button>
+              )}
+            />
+          </PanelRow>
+
+          {tabs.length > 1 && (
+            <Button
+              isDestructive
+              onClick={() => removeTab(currentTab)}
+              style={{ marginTop: '10px' }}
+            >
+              Remove Tab
+            </Button>
+          )}
+
+          <Button
+            variant="primary"
+            onClick={addTab}
+            style={{ marginTop: '10px' }}
+          >
+            Add New Tab
+          </Button>
+        </PanelBody>
+      </InspectorControls>
+
+      {/* Visual Preview in Canvas */}
+      <div {...useBlockProps()} className="proprietary-tools-block">
+        <h2 className="block-title">{blockTitle}</h2>
+
+        {/* Tab headers (hover to preview) */}
+        <div className="tab-headings">
+          {tabs.map((tab, index) => (
+            <button
+              key={index}
+              className={`tab-button ${index === currentTab ? 'active' : ''}`}
+              onMouseEnter={() => setCurrentTab(index)}
+            >
+              {tab.title}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab Content Preview */}
+        {tabs[currentTab] && (
+          <div className="tab-panel-preview">
+            <p>{tabs[currentTab].description}</p>
+            {tabs[currentTab].imageUrl && (
+              <img
+                src={tabs[currentTab].imageUrl}
+                alt={tabs[currentTab].imageAlt || ''}
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
+            )}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Edit;

@@ -1,24 +1,44 @@
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
+// src/save.js
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- *
- * @return {Element} Element to render.
- */
-export default function save() {
-	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Tabbed Content – hello from the saved content!' }
-		</p>
-	);
-}
+const Save = ({ attributes }) => {
+  const { blockTitle, tabs } = attributes;
+
+  return (
+    <div {...useBlockProps.save()} className="proprietary-tools-block">
+      {/* Block Title */}
+      <RichText.Content tagName="h2" value={blockTitle} className="block-title" />
+
+      {/* Tab Headers */}
+      <div className="tab-headings">
+        {tabs.map((tab, index) => (
+          <button
+            key={index}
+            className="tab-button"
+            data-tab={index}
+          >
+            {tab.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content Panels */}
+      <div className="tab-content-container">
+        {tabs.map((tab, index) => (
+          <div
+            key={index}
+            className={`tab-panel ${index === 0 ? 'active' : ''}`} // default to show first tab
+            data-tab-index={index}
+          >
+            <p>{tab.description}</p>
+            {tab.imageUrl && (
+              <img src={tab.imageUrl} alt={tab.imageAlt || ''} />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Save;

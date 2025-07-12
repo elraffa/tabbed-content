@@ -20,6 +20,20 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
 
-/* eslint-disable no-console */
-console.log( 'Hello World! (from real-blocks-tabbed-content block)' );
-/* eslint-enable no-console */
+document.addEventListener('DOMContentLoaded', function () {
+  const root = document.querySelectorAll('.proprietary-tools-block');
+
+  root.forEach((block) => {
+    const buttons = block.querySelectorAll('.tab-button');
+    const panels = block.querySelectorAll('.tab-panel');
+
+    buttons.forEach((button, index) => {
+      button.addEventListener('mouseenter', () => {
+        // Remove all active classes
+        panels.forEach((p) => p.classList.remove('active'));
+        // Add active to the hovered tab's panel
+        panels[index].classList.add('active');
+      });
+    });
+  });
+});

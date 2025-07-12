@@ -1,1 +1,35 @@
-.wp-block-real-blocks-tabbed-content{background-color:#21759b;color:#fff;padding:2px}
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/tabbed-content/style.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+.proprietary-tools-block .tab-headings {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+.proprietary-tools-block .tab-headings .tab-button {
+  padding: 8px 12px;
+  border: none;
+  background: #f0f0f0;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+.proprietary-tools-block .tab-headings .tab-button:hover {
+  background: #007cba;
+  color: white;
+}
+.proprietary-tools-block .tab-content-container {
+  margin-top: 2rem;
+}
+.proprietary-tools-block .tab-content-container .tab-panel {
+  display: none;
+}
+.proprietary-tools-block .tab-content-container .tab-panel.active {
+  display: block;
+}
+.proprietary-tools-block .tab-content-container .tab-panel img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

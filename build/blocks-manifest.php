@@ -7,9 +7,9 @@ return array(
 		'name' => 'real-blocks/tabbed-content',
 		'version' => '0.1.0',
 		'title' => 'Tabbed Content',
-		'category' => 'widgets',
-		'icon' => 'smiley',
-		'description' => 'Example block scaffolded with Create Block tool.',
+		'category' => 'layout',
+		'icon' => 'grid-view',
+		'description' => 'A custom block for displaying tabbed content.',
 		'example' => array(
 			
 		),
@@ -20,6 +20,27 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
-		'viewScript' => 'file:./view.js'
+		'viewScript' => 'file:./view.js',
+		'attributes' => array(
+			'blockTitle' => array(
+				'type' => 'string',
+				'default' => 'Tabbed Content'
+			),
+			'tabs' => array(
+				'type' => 'array',
+				'default' => array(
+					array(
+						'title' => 'Leo',
+						'description' => 'This is the content for Leo tab.',
+						'imageUrl' => '',
+						'imageAlt' => 'Leo image'
+					)
+				)
+			),
+			'activeTab' => array(
+				'type' => 'number',
+				'default' => 0
+			)
+		)
 	)
 );
