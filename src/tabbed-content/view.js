@@ -27,6 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const mobileButtons = block.querySelectorAll('.mobile-only .accordion-title');
     const mobileContents = block.querySelectorAll('.mobile-only .accordion-content');
 
+    // Ensure first mobile button has active class on load
+    if (mobileButtons.length > 0) {
+      mobileButtons[0].classList.add('active');
+    }
+
     mobileButtons.forEach((button, index) => {
       button.addEventListener('click', () => {
         // Remove all active classes from mobile content
