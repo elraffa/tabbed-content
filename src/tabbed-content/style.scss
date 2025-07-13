@@ -1,19 +1,37 @@
+.block-title {
+  font-family: "Inter", Sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
 .proprietary-tools-block {
+  .desktop-only {
+    display: block;
+  }
+  
+  .mobile-only {
+    display: none;
+  }
+
   .tab-headings {
-    display: flex;
-    gap: 10px;
+    display: block;
     margin-top: 1rem;
 
     .tab-button {
-      padding: 8px 12px;
+ 	  padding: 8px 10px 8px 0;
       border: none;
-      background: #f0f0f0;
       cursor: pointer;
+	  font-size: 77px;
+	  color: rgb(161, 161, 161);
+	  text-align: left;
+	  background: none;
+	  display: inline-block;
       transition: background 0.2s ease-in-out;
 
       &:hover {
-        background: #007cba;
-        color: white;
+        color: #000;
       }
     }
   }
@@ -25,13 +43,102 @@
       display: none;
 
       &.active {
-        display: block;
+        display: flex;
+		flex-direction: row;	
+		align-items: center;
+		justify-content: center;
+		gap: 2rem;
+	  }
+
+	  .tab-panel-content {
+		flex: 1;
+		max-width: 50%;
+		text-align: left;
+		font-size: 16px;
+		color: rgb(161, 161, 161);
+		line-height: 32px;
+		font-family: "Inter", Sans-serif;
+		font-weight: 400;
+	  }
+
+	  .tab-panel-image {
+		flex: 1;
+		max-width: 50%;
+		flex-shrink: 0;
+	  }
+
+	  p {
+		margin-top: 0.5rem;
+		gap: 1rem;
       }
 
       img {
         max-width: 100%;
         height: auto;
         margin-top: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .proprietary-tools-block {
+    .desktop-only {
+      display: none;
+    }
+    
+    .mobile-only {
+      display: block;
+    }
+
+    .mobile-accordion {
+      margin-top: 1rem;
+
+      .accordion-item {
+        margin-bottom: 1rem;
+
+        .accordion-title {
+          padding: 8px 10px 8px 0;
+          border: none;
+          cursor: pointer;
+          font-size: 60px;
+          color: rgb(161, 161, 161);
+          text-align: left;
+          background: none;
+          display: block;
+          width: 100%;
+          transition: color 0.2s ease-in-out;
+
+          &:hover {
+            color: #000;
+          }
+        }
+
+        .accordion-content {
+          display: none;
+          margin-top: 1rem;
+
+          &.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+          }
+
+          .tab-panel-content {
+            width: 100%;
+            text-align: left;
+          }
+
+          .tab-panel-image {
+            width: 100%;
+            
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+          }
+        }
       }
     }
   }

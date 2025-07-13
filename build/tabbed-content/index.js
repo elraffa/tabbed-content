@@ -201,10 +201,12 @@ const Edit = ({
           children: tab.title
         }, index))
       }), tabs && tabs[currentTab] && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-        className: "tab-panel-preview",
+        className: "tab-panel",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+          className: "tab-panel-content",
           children: tabs[currentTab].description
         }), tabs[currentTab].imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+          className: "tab-panel-image",
           src: tabs[currentTab].imageUrl,
           alt: tabs[currentTab].imageAlt || '',
           style: {
@@ -324,23 +326,53 @@ const Save = ({
         fontSize: headingFontSize ? `${headingFontSize}px` : undefined
       }
     }, blockTitle), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "tab-headings",
+      className: "tab-headings desktop-only",
       children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
         className: "tab-button",
         "data-tab": index,
         children: tab.title
       }, index))
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "tab-content-container",
+      className: "tab-content-container desktop-only",
       children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: `tab-panel ${index === 0 ? 'active' : ''}` // default to show first tab
-        ,
+        className: `tab-panel ${index === 0 ? 'active' : ''}`,
         "data-tab-index": index,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-          children: tab.description
-        }), tab.imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-          src: tab.imageUrl,
-          alt: tab.imageAlt || ''
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "tab-panel-content",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+            children: tab.description
+          })
+        }), tab.imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "tab-panel-image",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            src: tab.imageUrl,
+            alt: tab.imageAlt || ''
+          })
+        })]
+      }, index))
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "mobile-accordion mobile-only",
+      children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "accordion-item",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "accordion-title",
+          "data-tab": index,
+          children: tab.title
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: `accordion-content ${index === 0 ? 'active' : ''}`,
+          "data-tab-index": index,
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "tab-panel-content",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+              children: tab.description
+            })
+          }), tab.imageUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            className: "tab-panel-image",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+              src: tab.imageUrl,
+              alt: tab.imageAlt || ''
+            })
+          })]
         })]
       }, index))
     })]

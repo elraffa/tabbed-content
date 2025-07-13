@@ -160,10 +160,11 @@ const Edit = ({ attributes, setAttributes }) => {
 
         {/* Tab Content Preview */}
         {tabs && tabs[currentTab] && (
-          <div className="tab-panel-preview">
-            <p>{tabs[currentTab].description}</p>
+          <div className="tab-panel">
+            <p className="tab-panel-content">{tabs[currentTab].description}</p>
             {tabs[currentTab].imageUrl && (
               <img
+				className="tab-panel-image"
                 src={tabs[currentTab].imageUrl}
                 alt={tabs[currentTab].imageAlt || ''}
                 style={{ maxWidth: '100%', height: 'auto' }}
