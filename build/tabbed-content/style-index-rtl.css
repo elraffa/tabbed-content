@@ -96,6 +96,9 @@
     width: 100%;
     transition: color 0.2s ease-in-out;
   }
+  .proprietary-tools-block .mobile-accordion .accordion-item .accordion-title.active {
+    color: #000;
+  }
   .proprietary-tools-block .mobile-accordion .accordion-item .accordion-title:hover {
     color: #000;
   }
@@ -112,6 +115,12 @@
   .proprietary-tools-block .mobile-accordion .accordion-item .accordion-content .tab-panel-content {
     width: 100%;
     text-align: right;
+    text-align: right;
+    font-size: 16px;
+    color: rgb(161, 161, 161);
+    line-height: 32px;
+    font-family: "Inter", Sans-serif;
+    font-weight: 400;
   }
   .proprietary-tools-block .mobile-accordion .accordion-item .accordion-content .tab-panel-image {
     width: 100%;

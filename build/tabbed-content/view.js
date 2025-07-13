@@ -31,8 +31,12 @@ document.addEventListener('DOMContentLoaded', function () {
     mobileButtons.forEach((button, index) => {
       button.addEventListener('click', () => {
         // Remove all active classes from mobile content
+        mobileButtons.forEach(btn => btn.classList.remove('active'));
         mobileContents.forEach(content => content.classList.remove('active'));
         // Add active to the clicked accordion's content
+        if (mobileButtons[index]) {
+          mobileButtons[index].classList.add('active');
+        }
         if (mobileContents[index]) {
           mobileContents[index].classList.add('active');
         }

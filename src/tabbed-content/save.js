@@ -55,7 +55,7 @@ const Save = ({ attributes }) => {
         {tabs.map((tab, index) => (
           <div key={index} className="accordion-item">
             <button
-              className="accordion-title"
+              className={`accordion-title ${index === 0 ? 'active' : ''}`}
               data-tab={index}
             >
               {tab.title}
