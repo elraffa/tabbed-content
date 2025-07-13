@@ -68,3 +68,25 @@ img {
   height: auto;
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .tab-headings {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tab-headings .tab-button {
+    padding: 8px 10px;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+  }
+  .tab-panel {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .tab-panel .tab-panel-content,
+  .tab-panel .tab-panel-image {
+    max-width: 100%;
+  }
+}
