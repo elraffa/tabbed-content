@@ -113,6 +113,8 @@
           display: block;
           width: 100%;
           transition: color 0.2s ease-in-out;
+		  font-family: var(--wp--preset--font-family--pp-telegraf), sans-serif;
+
 
 		  &.active {
 			color: #000;
