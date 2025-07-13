@@ -8,11 +8,11 @@
   }
 
   .block-title {
-	font-family: "Inter", Sans-serif;
 	font-size: 17px;
 	font-weight: 700;
 	text-transform: uppercase;
 	letter-spacing: 0.22em;
+	margin-bottom: 60px;
 	}
 
   .tab-headings {
@@ -21,6 +21,7 @@
 
     .tab-button {
  	  padding: 8px 10px 8px 0;
+	  margin-right: 15px;
       border: none;
       cursor: pointer;
 	  font-size: 77px;
@@ -29,6 +30,9 @@
 	  background: none;
 	  display: inline-block;
       transition: color 0.3s ease-in-out;
+	  font-family: var(--wp--preset--font-family--pp-telegraf), sans-serif;
+	  line-height: 70px;
+
 
       &:hover {
         color: #000;
@@ -58,8 +62,8 @@
 		font-size: 16px;
 		color: rgb(161, 161, 161);
 		line-height: 32px;
-		font-family: "Inter", Sans-serif;
 		font-weight: 400;
+		font-family: 'Inter', Sans-serif;
 	  }
 
 	  .tab-panel-image {
@@ -137,7 +141,6 @@
 			font-size: 16px;
 			color: rgb(161, 161, 161);
 			line-height: 32px;
-			font-family: "Inter", Sans-serif;
 			font-weight: 400;
           }
 

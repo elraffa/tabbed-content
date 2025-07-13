@@ -8,11 +8,11 @@
   display: none;
 }
 .proprietary-tools-block .block-title {
-  font-family: "Inter", Sans-serif;
   font-size: 17px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.22em;
+  margin-bottom: 60px;
 }
 .proprietary-tools-block .tab-headings {
   display: block;
@@ -20,6 +20,7 @@
 }
 .proprietary-tools-block .tab-headings .tab-button {
   padding: 8px 0 8px 10px;
+  margin-left: 15px;
   border: none;
   cursor: pointer;
   font-size: 77px;
@@ -28,6 +29,8 @@
   background: none;
   display: inline-block;
   transition: color 0.3s ease-in-out;
+  font-family: var(--wp--preset--font-family--pp-telegraf), sans-serif;
+  line-height: 70px;
 }
 .proprietary-tools-block .tab-headings .tab-button:hover {
   color: #000;
@@ -53,8 +56,8 @@
   font-size: 16px;
   color: rgb(161, 161, 161);
   line-height: 32px;
-  font-family: "Inter", Sans-serif;
   font-weight: 400;
+  font-family: "Inter", Sans-serif;
 }
 .proprietary-tools-block .tab-content-container .tab-panel .tab-panel-image {
   flex: 1;
@@ -119,7 +122,6 @@
     font-size: 16px;
     color: rgb(161, 161, 161);
     line-height: 32px;
-    font-family: "Inter", Sans-serif;
     font-weight: 400;
   }
   .proprietary-tools-block .mobile-accordion .accordion-item .accordion-content .tab-panel-image {
