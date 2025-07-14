@@ -305,14 +305,14 @@ const Edit = ({ attributes, setAttributes }) => {
         }}
       >
 		
-		{createElement(
-			TagName,
-			{
-				className: `block-title`,
-				style: { fontSize: headingFontSize ? `${headingFontSize}px` : undefined }
-			},
-			blockTitle
-		)}
+		<RichText
+			tagName={TagName}
+			className="block-title"
+			style={{ fontSize: headingFontSize ? `${headingFontSize}px` : undefined }}
+			value={blockTitle}
+			onChange={(content) => setAttributes({ blockTitle: content })}
+			placeholder="Enter block title..."
+		/>
 
         {/* Tab headers (hover to preview) */}
         <div className="tab-headings">
@@ -330,7 +330,13 @@ const Edit = ({ attributes, setAttributes }) => {
         {/* Tab Content Preview */}
         {tabs && tabs[currentTab] && (
           <div className="tab-panel">
-            <p className="tab-panel-content">{tabs[currentTab].description}</p>
+            <RichText
+              tagName="p"
+              className="tab-panel-content"
+              value={tabs[currentTab].description}
+              onChange={(content) => updateTab(currentTab, 'description', content)}
+              placeholder="Enter tab content..."
+            />
             {tabs[currentTab].imageUrl && (
               <img
 				className="tab-panel-image"

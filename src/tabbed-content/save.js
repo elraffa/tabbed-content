@@ -22,14 +22,12 @@ const Save = ({ attributes }) => {
       }}
     >
       {/* Block Title */}
-      {createElement(
-        headingTag,
-        {
-          className: 'block-title',
-          style: { fontSize: headingFontSize ? `${headingFontSize}px` : undefined }
-        },
-        blockTitle
-      )}
+      <RichText.Content
+        tagName={headingTag}
+        className="block-title"
+        style={{ fontSize: headingFontSize ? `${headingFontSize}px` : undefined }}
+        value={blockTitle}
+      />
 
       {/* Desktop: Tab Headers */}
       <div className="tab-headings desktop-only" role="tablist" aria-label="Tab navigation">
@@ -62,7 +60,10 @@ const Save = ({ attributes }) => {
             tabIndex="0"
           >
             <div className="tab-panel-content">
-              <p>{tab.description}</p>
+              <RichText.Content
+                tagName="p"
+                value={tab.description}
+              />
             </div>
             {tab.imageUrl && (
               <div className="tab-panel-image">
@@ -98,7 +99,10 @@ const Save = ({ attributes }) => {
               aria-labelledby={`accordion-title-${index}`}
             >
               <div className="tab-panel-content">
-                <p>{tab.description}</p>
+                <RichText.Content
+                  tagName="p"
+                  value={tab.description}
+                />
               </div>
               {tab.imageUrl && (
                 <div className="tab-panel-image">
