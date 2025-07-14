@@ -427,9 +427,16 @@ const Save = ({
       }
     }, blockTitle), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "tab-headings desktop-only",
+      role: "tablist",
+      "aria-label": "Tab navigation",
       children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
         className: "tab-button",
         "data-tab": index,
+        role: "tab",
+        "aria-selected": index === 0 ? 'true' : 'false',
+        "aria-controls": `tabpanel-${index}`,
+        id: `tab-${index}`,
+        tabIndex: index === 0 ? 0 : -1,
         children: tab.title
       }, index))
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
@@ -437,6 +444,10 @@ const Save = ({
       children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: `tab-panel ${index === 0 ? 'active' : ''}`,
         "data-tab-index": index,
+        role: "tabpanel",
+        id: `tabpanel-${index}`,
+        "aria-labelledby": `tab-${index}`,
+        tabIndex: "0",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
           className: "tab-panel-content",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
@@ -446,21 +457,30 @@ const Save = ({
           className: "tab-panel-image",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
             src: tab.imageUrl,
-            alt: tab.imageAlt || ''
+            alt: tab.imageAlt || `Image for ${tab.title}`
           })
         })]
       }, index))
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       className: "mobile-accordion mobile-only",
+      role: "region",
+      "aria-label": "Tab content accordion",
       children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
         className: "accordion-item",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           className: `accordion-title ${index === 0 ? 'active' : ''}`,
           "data-tab": index,
+          role: "button",
+          "aria-expanded": index === 0 ? 'true' : 'false',
+          "aria-controls": `accordion-content-${index}`,
+          id: `accordion-title-${index}`,
           children: tab.title
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           className: `accordion-content ${index === 0 ? 'active' : ''}`,
           "data-tab-index": index,
+          role: "region",
+          id: `accordion-content-${index}`,
+          "aria-labelledby": `accordion-title-${index}`,
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "tab-panel-content",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
@@ -470,7 +490,7 @@ const Save = ({
             className: "tab-panel-image",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
               src: tab.imageUrl,
-              alt: tab.imageAlt || ''
+              alt: tab.imageAlt || `Image for ${tab.title}`
             })
           })]
         })]
