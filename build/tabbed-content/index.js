@@ -91,6 +91,7 @@ const Edit = ({
         initialOpen: false,
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
           label: "Heading Tag",
+          help: "Choose the HTML element for SEO and semantic structure.",
           value: headingTag,
           options: [{
             label: 'H1',
@@ -116,6 +117,7 @@ const Edit = ({
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FontSizePicker, {
           label: "Font Size",
+          help: "Set the font size for the block title.",
           value: headingFontSize,
           onChange: val => setAttributes({
             headingFontSize: val
@@ -142,47 +144,145 @@ const Edit = ({
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
         title: "Tabs",
         initialOpen: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, {
+        children: [tabs.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          style: {
+            marginBottom: '16px',
+            padding: '12px',
+            backgroundColor: '#f0f0f0',
+            borderRadius: '4px'
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+            style: {
+              display: 'block',
+              marginBottom: '8px',
+              fontWeight: '500',
+              fontSize: '13px'
+            },
+            children: ["Edit Tab (", currentTab + 1, " of ", tabs.length, ")"]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            style: {
+              display: 'flex',
+              gap: '4px',
+              flexWrap: 'wrap'
+            },
+            children: tabs.map((tab, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+              variant: index === currentTab ? 'primary' : 'secondary',
+              size: "small",
+              onClick: () => setCurrentTab(index),
+              style: {
+                minWidth: '30px'
+              },
+              children: index + 1
+            }, index))
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            style: {
+              marginTop: '8px',
+              fontSize: '12px',
+              color: '#666',
+              fontStyle: 'italic'
+            },
+            children: ["Currently editing: \"", tabs[currentTab]?.title || 'Untitled', "\""]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
             label: "Tab Title",
             value: tabs[currentTab]?.title,
             onChange: val => updateTab(currentTab, 'title', val)
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextareaControl, {
             label: "Tab Description",
             value: tabs[currentTab]?.description,
             onChange: val => updateTab(currentTab, 'description', val)
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
-            onSelect: media => {
-              updateTab(currentTab, 'imageUrl', media.url);
-              updateTab(currentTab, 'imageAlt', media.alt);
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            style: {
+              width: '100%'
             },
-            allowedTypes: ['image'],
-            render: ({
-              open
-            }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-              onClick: open,
-              variant: "secondary",
-              children: tabs[currentTab]?.imageUrl ? 'Change Image' : 'Upload Image'
-            })
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("label", {
+              style: {
+                display: 'block',
+                marginBottom: '8px',
+                fontWeight: '500'
+              },
+              children: "Tab Image"
+            }), tabs[currentTab]?.imageUrl ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              style: {
+                marginBottom: '10px'
+              },
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+                src: tabs[currentTab].imageUrl,
+                alt: tabs[currentTab].imageAlt || 'Tab image preview',
+                style: {
+                  width: '100%',
+                  maxWidth: '200px',
+                  height: 'auto',
+                  borderRadius: '4px',
+                  border: '1px solid #ddd'
+                }
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                style: {
+                  marginTop: '8px',
+                  display: 'flex',
+                  gap: '8px'
+                },
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
+                  onSelect: media => {
+                    updateTab(currentTab, 'imageUrl', media.url);
+                    updateTab(currentTab, 'imageAlt', media.alt);
+                  },
+                  allowedTypes: ['image'],
+                  render: ({
+                    open
+                  }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                    onClick: open,
+                    variant: "secondary",
+                    size: "small",
+                    children: "Change Image"
+                  })
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                  onClick: () => {
+                    updateTab(currentTab, 'imageUrl', '');
+                    updateTab(currentTab, 'imageAlt', '');
+                  },
+                  variant: "secondary",
+                  size: "small",
+                  isDestructive: true,
+                  children: "Remove Image"
+                })]
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.MediaUpload, {
+              onSelect: media => {
+                updateTab(currentTab, 'imageUrl', media.url);
+                updateTab(currentTab, 'imageAlt', media.alt);
+              },
+              allowedTypes: ['image'],
+              render: ({
+                open
+              }) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+                onClick: open,
+                variant: "secondary",
+                children: "Upload Image"
+              })
+            })]
           })
-        }), tabs.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-          isDestructive: true,
-          onClick: () => removeTab(currentTab),
+        }), tabs.length > 1 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
           style: {
+            display: 'flex',
+            gap: '10px',
             marginTop: '10px'
           },
-          children: "Remove Tab"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-          variant: "primary",
-          onClick: addTab,
-          style: {
-            marginTop: '10px'
-          },
-          children: "Add New Tab"
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+            isDestructive: true,
+            onClick: () => removeTab(currentTab),
+            disabled: tabs.length === 1,
+            children: "Remove Tab"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+            variant: "primary",
+            onClick: addTab,
+            children: "Add New Tab"
+          })]
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {

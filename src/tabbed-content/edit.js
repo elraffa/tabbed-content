@@ -8,6 +8,7 @@ import {
 import {
   PanelBody,
   TextControl,
+  TextareaControl,
   Button,
   PanelRow,
   SelectControl,
@@ -55,6 +56,7 @@ const Edit = ({ attributes, setAttributes }) => {
 		<PanelBody title="Heading Settings" initialOpen={false}>
 		<SelectControl
 			label="Heading Tag"
+		    help="Choose the HTML element for SEO and semantic structure."
 			value={headingTag}
 			options={[
 			{ label: 'H1', value: 'h1' },
@@ -69,6 +71,7 @@ const Edit = ({ attributes, setAttributes }) => {
 
 		<FontSizePicker
 			label="Font Size"
+			help="Set the font size for the block title."
 			value={headingFontSize}
 			onChange={(val) => setAttributes({ headingFontSize: val })}
 			fontSizes={[
@@ -82,6 +85,46 @@ const Edit = ({ attributes, setAttributes }) => {
 		</PanelBody>
 
         <PanelBody title="Tabs" initialOpen={true}>
+          {/* Tab Navigation */}
+          {tabs.length > 1 && (
+            <div style={{ 
+              marginBottom: '16px', 
+              padding: '12px', 
+              backgroundColor: '#f0f0f0', 
+              borderRadius: '4px' 
+            }}>
+              <label style={{ 
+                display: 'block', 
+                marginBottom: '8px', 
+                fontWeight: '500',
+                fontSize: '13px'
+              }}>
+                Edit Tab ({currentTab + 1} of {tabs.length})
+              </label>
+              <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                {tabs.map((tab, index) => (
+                  <Button
+                    key={index}
+                    variant={index === currentTab ? 'primary' : 'secondary'}
+                    size="small"
+                    onClick={() => setCurrentTab(index)}
+                    style={{ minWidth: '30px' }}
+                  >
+                    {index + 1}
+                  </Button>
+                ))}
+              </div>
+              <div style={{ 
+                marginTop: '8px', 
+                fontSize: '12px', 
+                color: '#666',
+                fontStyle: 'italic' 
+              }}>
+                Currently editing: "{tabs[currentTab]?.title || 'Untitled'}"
+              </div>
+            </div>
+          )}
+
           <PanelRow>
             <TextControl
               label="Tab Title"
@@ -91,7 +134,7 @@ const Edit = ({ attributes, setAttributes }) => {
           </PanelRow>
 
           <PanelRow>
-            <TextControl
+            <TextareaControl
               label="Tab Description"
               value={tabs[currentTab]?.description}
               onChange={(val) => updateTab(currentTab, 'description', val)}
@@ -99,37 +142,84 @@ const Edit = ({ attributes, setAttributes }) => {
           </PanelRow>
 
           <PanelRow>
-            <MediaUpload
-              onSelect={(media) => {
-                updateTab(currentTab, 'imageUrl', media.url);
-                updateTab(currentTab, 'imageAlt', media.alt);
-              }}
-              allowedTypes={['image']}
-              render={({ open }) => (
-                <Button onClick={open} variant="secondary">
-                  {tabs[currentTab]?.imageUrl ? 'Change Image' : 'Upload Image'}
-                </Button>
+            <div style={{ width: '100%' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>
+                Tab Image
+              </label>
+              
+              {tabs[currentTab]?.imageUrl ? (
+                <div style={{ marginBottom: '10px' }}>
+                  <img 
+                    src={tabs[currentTab].imageUrl} 
+                    alt={tabs[currentTab].imageAlt || 'Tab image preview'} 
+                    style={{ 
+                      width: '100%', 
+                      maxWidth: '200px', 
+                      height: 'auto', 
+                      borderRadius: '4px',
+                      border: '1px solid #ddd'
+                    }} 
+                  />
+                  <div style={{ marginTop: '8px', display: 'flex', gap: '8px' }}>
+                    <MediaUpload
+                      onSelect={(media) => {
+                        updateTab(currentTab, 'imageUrl', media.url);
+                        updateTab(currentTab, 'imageAlt', media.alt);
+                      }}
+                      allowedTypes={['image']}
+                      render={({ open }) => (
+                        <Button onClick={open} variant="secondary" size="small">
+                          Change Image
+                        </Button>
+                      )}
+                    />
+                    <Button 
+                      onClick={() => {
+                        updateTab(currentTab, 'imageUrl', '');
+                        updateTab(currentTab, 'imageAlt', '');
+                      }}
+                      variant="secondary" 
+                      size="small"
+                      isDestructive
+                    >
+                      Remove Image
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <MediaUpload
+                  onSelect={(media) => {
+                    updateTab(currentTab, 'imageUrl', media.url);
+                    updateTab(currentTab, 'imageAlt', media.alt);
+                  }}
+                  allowedTypes={['image']}
+                  render={({ open }) => (
+                    <Button onClick={open} variant="secondary">
+                      Upload Image
+                    </Button>
+                  )}
+                />
               )}
-            />
+            </div>
           </PanelRow>
 
           {tabs.length > 1 && (
-            <Button
-              isDestructive
-              onClick={() => removeTab(currentTab)}
-              style={{ marginTop: '10px' }}
-            >
-              Remove Tab
-            </Button>
-          )}
-
-          <Button
-            variant="primary"
-            onClick={addTab}
-            style={{ marginTop: '10px' }}
-          >
-            Add New Tab
-          </Button>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+			<Button
+				isDestructive
+				onClick={() => removeTab(currentTab)}
+				disabled={tabs.length === 1}
+			>
+				Remove Tab
+			</Button>
+			<Button
+				variant="primary"
+				onClick={addTab}
+			>
+				Add New Tab
+			</Button>
+			</div>
+		)}
         </PanelBody>
       </InspectorControls>
 
