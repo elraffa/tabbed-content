@@ -43,6 +43,24 @@
 		"activeTab": {
 			"type": "number",
 			"default": 0	
+		},
+		"blockPadding": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
+		},
+		"blockMargin": {
+			"type": "object",
+			"default": {
+				"top": "0px",
+				"right": "0px",
+				"bottom": "0px",
+				"left": "0px"
+			}
 		}
 	}
 }

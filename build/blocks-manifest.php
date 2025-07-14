@@ -48,6 +48,24 @@ return array(
 			'activeTab' => array(
 				'type' => 'number',
 				'default' => 0
+			),
+			'blockPadding' => array(
+				'type' => 'object',
+				'default' => array(
+					'top' => '0px',
+					'right' => '0px',
+					'bottom' => '0px',
+					'left' => '0px'
+				)
+			),
+			'blockMargin' => array(
+				'type' => 'object',
+				'default' => array(
+					'top' => '0px',
+					'right' => '0px',
+					'bottom' => '0px',
+					'left' => '0px'
+				)
 			)
 		)
 	)

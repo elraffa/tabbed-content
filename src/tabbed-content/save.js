@@ -3,10 +3,24 @@ import { useBlockProps, RichText } from '@wordpress/block-editor';
 import { createElement } from '@wordpress/element';
 
 const Save = ({ attributes }) => {
-  const { blockTitle, headingTag = 'h2', headingFontSize, tabs } = attributes;
+  const { 
+    blockTitle, 
+    headingTag = 'h2', 
+    headingFontSize, 
+    tabs,
+    blockPadding = { top: "0px", right: "0px", bottom: "0px", left: "0px" },
+    blockMargin = { top: "0px", right: "0px", bottom: "0px", left: "0px" }
+  } = attributes;
 
   return (
-    <div {...useBlockProps.save()} className="proprietary-tools-block">
+    <div 
+      {...useBlockProps.save()} 
+      className="proprietary-tools-block"
+      style={{
+        padding: `${blockPadding.top || '0px'} ${blockPadding.right || '0px'} ${blockPadding.bottom || '0px'} ${blockPadding.left || '0px'}`,
+        margin: `${blockMargin.top || '0px'} ${blockMargin.right || '0px'} ${blockMargin.bottom || '0px'} ${blockMargin.left || '0px'}`
+      }}
+    >
       {/* Block Title */}
       {createElement(
         headingTag,
