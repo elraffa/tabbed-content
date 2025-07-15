@@ -337,12 +337,48 @@ const Edit = ({ attributes, setAttributes }) => {
               onChange={(content) => updateTab(currentTab, 'description', content)}
               placeholder="Enter tab content..."
             />
-            {tabs[currentTab].imageUrl && (
-              <img
-				className="tab-panel-image"
-                src={tabs[currentTab].imageUrl}
-                alt={tabs[currentTab].imageAlt || ''}
-                style={{ maxWidth: '100%', height: 'auto' }}
+            {tabs[currentTab].imageUrl ? (
+              <MediaUpload
+                onSelect={(media) => {
+                  updateTab(currentTab, 'imageUrl', media.url);
+                  updateTab(currentTab, 'imageAlt', media.alt);
+                }}
+                allowedTypes={['image']}
+                value={tabs[currentTab].imageUrl}
+                render={({ open }) => (
+                  <div 
+                    className="tab-panel-image-wrapper" 
+                    onClick={open}
+                  >
+                    <img
+                      className="tab-panel-image"
+                      src={tabs[currentTab].imageUrl}
+                      alt={tabs[currentTab].imageAlt || ''}
+                      style={{ maxWidth: '100%', height: 'auto' }}
+                    />
+                    <div className="image-edit-overlay">
+                      Click to edit
+                    </div>
+                  </div>
+                )}
+              />
+            ) : (
+              <MediaUpload
+                onSelect={(media) => {
+                  updateTab(currentTab, 'imageUrl', media.url);
+                  updateTab(currentTab, 'imageAlt', media.alt);
+                }}
+                allowedTypes={['image']}
+                render={({ open }) => (
+                  <div 
+                    className="tab-panel-image-placeholder"
+                    onClick={open}
+                  >
+                    <span>
+                      Click to add image
+                    </span>
+                  </div>
+                )}
               />
             )}
           </div>

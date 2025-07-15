@@ -45,7 +45,6 @@
 
 .tab-panel-content {
 	flex: 1;
-	max-width: 50% !important;
 	text-align: left;
 	font-size: 16px;
 	color: rgb(161, 161, 161);
@@ -56,8 +55,67 @@
 
 .tab-panel-image {
 	flex: 1;
-	max-width: 50% !important;
 	flex-shrink: 0;
+}
+
+.tab-panel-image-wrapper {
+  position: relative;
+  display: block;
+  flex: 1;
+  flex-shrink: 0;
+  cursor: pointer;
+  
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  &:hover .image-edit-overlay {
+    opacity: 1 !important;
+  }
+  
+  &:hover img {
+    filter: brightness(0.9);
+  }
+}
+
+.image-edit-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tab-panel-image-placeholder {
+  flex: 1;
+  max-width: 50% !important;
+  flex-shrink: 0;
+  border: 2px dashed #ccc;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: all 0.2s;
+  
+  &:hover {
+    border-color: #007cba !important;
+    background-color: #f0f6fc !important;
+  }
+  
+  span {
+    color: #666;
+    font-size: 14px;
+  }
 }
 
 p {
@@ -90,7 +148,9 @@ img {
 	text-align: center;
 
 	.tab-panel-content,
-	.tab-panel-image {
+	.tab-panel-image,
+	.tab-panel-image-wrapper,
+	.tab-panel-image-placeholder {
 	  max-width: 100%;
 	}
   }
